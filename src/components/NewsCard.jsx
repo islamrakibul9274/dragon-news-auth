@@ -1,4 +1,5 @@
 import { FaRegBookmark, FaRegEye, FaStar } from "react-icons/fa";
+import { Link } from "react-router-dom";
 // New Method of handling props
 const NewsCard = (props = {}) => {
     const { news } = props || {};
@@ -40,9 +41,9 @@ const NewsCard = (props = {}) => {
                 <p className="text-gray-700 text-sm">
                     {news.details.slice(0, 150)}.....{""}
                 </p>
-                <a href="#" className="text-orange-500 font-semibold mt-2 inline-block">
+                <Link to={`/news/${news._id}`} className="text-orange-500 font-semibold mt-2 inline-block">
                     Read More
-                </a>
+                </Link>
             </div>
 
             {/* Card Footer */}
