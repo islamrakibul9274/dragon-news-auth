@@ -42,35 +42,34 @@ export default function HeroFeatured({ article }) {
               e.currentTarget.src = "/assets/demo-card-thumbnail.png";
             }}
           />
-          {/* Gradient overlay for crystal-clear readability in upper portion */}
-          <div className="absolute inset-0 bg-gradient-to-b from-gray-950/95 via-gray-950/80 to-gray-950/55" />
-          <div className="absolute inset-0 bg-black/25 pointer-events-none" />
+          {/* Lighter, balanced gradient: keeps the image clearly visible while providing contrast for upper text */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/35 to-black/10" />
         </div>
 
         {/* Text and Controls in the Upper Portion */}
         <div className="relative z-10 p-6 sm:p-8 md:p-10 flex flex-col justify-start max-w-4xl">
           {/* Metadata Badges */}
           <div className="flex flex-wrap items-center gap-2.5 mb-4">
-            <span className="px-3 py-1 rounded-full bg-red-600 text-white font-extrabold text-xs uppercase tracking-wider shadow-sm">
+            <span className="px-3 py-1 rounded-full bg-red-600 text-white font-extrabold text-xs uppercase tracking-wider shadow-md">
               Lead Dispatch of the Day
             </span>
-            <span className="text-gray-200 text-xs flex items-center gap-1.5 font-semibold bg-black/50 backdrop-blur-md px-3 py-1 rounded-full border border-white/10">
+            <span className="text-white text-xs flex items-center gap-1.5 font-semibold bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/20 shadow-sm">
               <Clock className="w-3.5 h-3.5 text-red-400" />
               4 min read
             </span>
-            <span className="text-white/40 text-xs">•</span>
-            <span className="text-gray-300 text-xs font-medium">
+            <span className="text-white/60 text-xs">•</span>
+            <span className="text-white/90 text-xs font-semibold drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
               {article.author?.published_date || "Today's Edition"}
             </span>
           </div>
 
-          {/* Headline */}
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[38px] font-black font-serif tracking-tight leading-tight mb-4 text-white hover:text-red-400 transition-colors drop-shadow-md">
+          {/* Headline with drop shadow for razor-sharp legibility over the image */}
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[38px] font-black font-serif tracking-tight leading-tight mb-4 text-white hover:text-red-400 transition-colors drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
             <Link href={`/news/${article._id}`}>{article.title}</Link>
           </h2>
 
           {/* Excerpt Summary */}
-          <p className="text-gray-200 text-sm sm:text-base leading-relaxed line-clamp-3 mb-6 font-normal drop-shadow-xs max-w-3xl">
+          <p className="text-white/95 text-sm sm:text-base leading-relaxed line-clamp-3 mb-6 font-medium drop-shadow-[0_1px_4px_rgba(0,0,0,0.95)] max-w-3xl">
             {article.details}
           </p>
 
@@ -86,7 +85,7 @@ export default function HeroFeatured({ article }) {
 
             <button
               onClick={() => setShowAiBriefing(true)}
-              className="px-4 py-3 bg-white/15 hover:bg-white/25 active:scale-95 text-white font-bold text-sm rounded-2xl backdrop-blur-md transition-all flex items-center gap-1.5 border border-white/20 shadow-xs"
+              className="px-4 py-3 bg-black/60 hover:bg-black/80 active:scale-95 text-white font-bold text-sm rounded-2xl backdrop-blur-md transition-all flex items-center gap-1.5 border border-white/25 shadow-md"
             >
               <Sparkles className="w-4 h-4 text-amber-400" />
               <span>⚡ AI 30s Briefing</span>
@@ -94,10 +93,10 @@ export default function HeroFeatured({ article }) {
 
             <button
               onClick={handleSave}
-              className={`p-3 rounded-2xl border backdrop-blur-md transition-all ${
+              className={`p-3 rounded-2xl border backdrop-blur-md transition-all shadow-md ${
                 saved
                   ? "bg-red-600 border-red-500 text-white"
-                  : "bg-white/15 border-white/20 text-white hover:bg-white/25"
+                  : "bg-black/60 border-white/25 text-white hover:bg-black/80"
               }`}
               title={saved ? "Remove bookmark" : "Save for later"}
             >
