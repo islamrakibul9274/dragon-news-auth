@@ -28,6 +28,12 @@ const firebaseConfig = {
     "1:1234567890:web:abcdef",
 };
 
+export const isFirebaseConfigured = Boolean(
+  process.env.NEXT_PUBLIC_FIREBASE_API_KEY &&
+  process.env.NEXT_PUBLIC_FIREBASE_API_KEY.length > 20 &&
+  !process.env.NEXT_PUBLIC_FIREBASE_API_KEY.includes("Dummy")
+);
+
 const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
 const auth = getAuth(app);
 

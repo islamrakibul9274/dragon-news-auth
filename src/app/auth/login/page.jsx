@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { AuthContext } from "../../../provider/AuthProvider";
 
 function LoginForm() {
-  const { loginUser } = useContext(AuthContext);
+  const { loginUser, isFirebaseConfigured } = useContext(AuthContext);
   const [error, setError] = useState({});
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -37,9 +37,24 @@ function LoginForm() {
         onSubmit={handleLogin}
         className="p-8 md:p-10 w-full max-w-md bg-white border border-gray-200 shadow-sm rounded-lg"
       >
-        <h3 className="text-2xl font-bold text-center text-gray-900 mb-6">
+        <h3 className="text-2xl font-bold text-center text-gray-900 mb-4">
           Login your Account
         </h3>
+
+        {!isFirebaseConfigured && (
+          <div className="mb-5 p-3 bg-amber-50 border border-amber-200/90 rounded-xl text-amber-900 text-xs flex items-start gap-2.5">
+            <span className="text-sm">⚡</span>
+            <div>
+              <p className="font-bold text-[11px] uppercase tracking-wider text-amber-800">
+                Instant Sandbox Auth
+              </p>
+              <p className="text-amber-800 text-[11px] leading-relaxed mt-0.5">
+                Sign in with any credentials to test immediately. To link your live Firebase cloud project, add your keys to <code className="bg-amber-100/80 px-1 py-0.5 rounded font-mono text-[10px]">.env.local</code>.
+              </p>
+            </div>
+          </div>
+        )}
+
         <hr className="border-gray-200 mb-6" />
 
         <div className="space-y-4">

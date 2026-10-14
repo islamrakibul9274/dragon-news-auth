@@ -4,23 +4,52 @@ import { useContext } from "react";
 import { AuthContext } from "../provider/AuthProvider";
 
 const SocialLogin = () => {
-  const { googleLogin, githubLogin } = useContext(AuthContext);
+  const { user, logOut, googleLogin, githubLogin } = useContext(AuthContext);
 
   const handleGoogle = () => {
     if (googleLogin) {
-      googleLogin()
-        .then((res) => console.log("Google Login successful:", res.user))
-        .catch((err) => console.error("Google Login error:", err));
+      googleLogin().catch((err) => console.error("Google Login error:", err));
     }
   };
 
   const handleGithub = () => {
     if (githubLogin) {
-      githubLogin()
-        .then((res) => console.log("GitHub Login successful:", res.user))
-        .catch((err) => console.error("GitHub Login error:", err));
+      githubLogin().catch((err) => console.error("GitHub Login error:", err));
     }
   };
+
+  if (user) {
+    return (
+      <div className="bg-white p-5 rounded-3xl border-2 border-gray-200/80 shadow-xs">
+        <h3 className="font-black text-gray-950 mb-3 text-sm tracking-tight flex items-center justify-between">
+          <span>Active Reader Account</span>
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        </h3>
+        <div className="flex items-center gap-3 mb-4">
+          <img
+            src={user.photoURL || "/assets/user.png"}
+            alt={user.displayName || "User"}
+            className="w-10 h-10 rounded-full border-2 border-red-500 object-cover"
+            onError={(e) => {
+              e.currentTarget.src = "/assets/user.png";
+            }}
+          />
+          <div className="min-w-0 flex-1">
+            <h4 className="font-bold text-gray-900 text-sm truncate">
+              {user.displayName || "Reader"}
+            </h4>
+            <p className="text-xs text-gray-500 truncate">{user.email}</p>
+          </div>
+        </div>
+        <button
+          onClick={logOut}
+          className="btn w-full bg-gray-100 hover:bg-gray-200 text-gray-800 border-none rounded-xl text-xs font-bold py-2 transition-colors"
+        >
+          Sign Out
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white p-5 rounded-3xl border-2 border-gray-200/80 shadow-xs">
