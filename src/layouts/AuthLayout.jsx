@@ -1,18 +1,14 @@
-import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import Login from "../pages/Login";
 
-
-const AuthLayout = () => {
-    return (
-        <div className="font-poppins bg-[#f3f3f3]">
-            <header className="py-3 w-11/12 mx-auto">
-                <Navbar></Navbar>
-            </header>
-            <Outlet>
-            </Outlet>
-        </div>
-    );
+const AuthLayout = ({ children }) => {
+  return (
+    <div className="font-poppins bg-[#f3f3f3] min-h-screen">
+      <header className="py-4 w-11/12 mx-auto">
+        <Navbar />
+      </header>
+      <main>{children}</main>
+    </div>
+  );
 };
 
 export default AuthLayout;

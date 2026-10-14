@@ -1,25 +1,34 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_apiKey,
-  authDomain: import.meta.env.VITE_authDomain,
-  projectId: import.meta.env.VITE_projectId,
-  storageBucket: import.meta.env.VITE_storageBucket,
-  messagingSenderId: import.meta.env.VITE_messagingSenderId,
-  appId: import.meta.env.VITE_appId,
+  apiKey:
+    process.env.NEXT_PUBLIC_FIREBASE_API_KEY ||
+    process.env.NEXT_PUBLIC_apiKey ||
+    "AIzaSyDummyKeyForPrerenderingBuildOnly",
+  authDomain:
+    process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN ||
+    process.env.NEXT_PUBLIC_authDomain ||
+    "dragon-news-auth.firebaseapp.com",
+  projectId:
+    process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID ||
+    process.env.NEXT_PUBLIC_projectId ||
+    "dragon-news-auth",
+  storageBucket:
+    process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET ||
+    process.env.NEXT_PUBLIC_storageBucket ||
+    "dragon-news-auth.appspot.com",
+  messagingSenderId:
+    process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID ||
+    process.env.NEXT_PUBLIC_messagingSenderId ||
+    "1234567890",
+  appId:
+    process.env.NEXT_PUBLIC_FIREBASE_APP_ID ||
+    process.env.NEXT_PUBLIC_appId ||
+    "1:1234567890:web:abcdef",
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-
+const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-export default (auth);
-
-
+export default auth;
