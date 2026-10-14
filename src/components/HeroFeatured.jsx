@@ -31,76 +31,78 @@ export default function HeroFeatured({ article }) {
 
   return (
     <>
-      <div className="bg-white text-gray-950 rounded-3xl overflow-hidden shadow-xl border-2 border-gray-200/80 mb-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12">
-          {/* Left Text Column */}
-          <div className="lg:col-span-7 p-6 sm:p-8 md:p-10 flex flex-col justify-between">
-            <div>
-              <div className="flex flex-wrap items-center gap-2.5 mb-4">
-                <span className="px-3 py-1 rounded-full bg-red-600 text-white font-extrabold text-xs uppercase tracking-wider shadow-sm">
-                  Lead Dispatch of the Day
-                </span>
-                <span className="text-gray-600 text-xs flex items-center gap-1 font-semibold">
-                  <Clock className="w-3.5 h-3.5 text-gray-500" />
-                  4 min read
-                </span>
-                <span className="text-gray-300 text-xs">•</span>
-                <span className="text-gray-500 text-xs font-medium">
-                  {article.author?.published_date || "Today's Edition"}
-                </span>
-              </div>
+      <div className="relative rounded-3xl overflow-hidden shadow-xl border-2 border-gray-200/80 mb-8 min-h-[460px] md:min-h-[500px] flex flex-col justify-start group">
+        {/* Background Image Overlay spanning the whole section */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <img
+            src={article.image_url || "/assets/demo-card-thumbnail.png"}
+            alt={article.title}
+            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+            onError={(e) => {
+              e.currentTarget.src = "/assets/demo-card-thumbnail.png";
+            }}
+          />
+          {/* Gradient overlay for crystal-clear readability in upper portion */}
+          <div className="absolute inset-0 bg-gradient-to-b from-gray-950/95 via-gray-950/80 to-gray-950/55" />
+          <div className="absolute inset-0 bg-black/25 pointer-events-none" />
+        </div>
 
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-black font-serif tracking-tight leading-tight mb-4 text-gray-950 hover:text-red-600 transition-colors">
-                <Link href={`/news/${article._id}`}>{article.title}</Link>
-              </h2>
-
-              <p className="text-gray-700 text-sm sm:text-base leading-relaxed line-clamp-3 mb-6 font-normal">
-                {article.details}
-              </p>
-            </div>
-
-            {/* Controls */}
-            <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-gray-150">
-              <Link
-                href={`/news/${article._id}`}
-                className="px-6 py-3 bg-red-600 hover:bg-red-700 active:scale-95 text-white font-bold text-sm rounded-2xl transition-all flex items-center gap-2 shadow-lg shadow-red-600/30"
-              >
-                <span>Read Full Story</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-
-              <button
-                onClick={() => setShowAiBriefing(true)}
-                className="px-4 py-3 bg-amber-100 hover:bg-amber-200 active:scale-95 text-amber-900 font-bold text-sm rounded-2xl transition-all flex items-center gap-1.5 border border-amber-300 shadow-2xs"
-              >
-                <Sparkles className="w-4 h-4 text-amber-700" />
-                <span>⚡ AI 30s Briefing</span>
-              </button>
-
-              <button
-                onClick={handleSave}
-                className={`p-3 rounded-2xl border transition-all ${
-                  saved
-                    ? "bg-red-50 border-red-400 text-red-600"
-                    : "bg-gray-100 border-gray-200 text-gray-600 hover:text-black hover:bg-gray-200"
-                }`}
-                title={saved ? "Remove bookmark" : "Save for later"}
-              >
-                <Bookmark className="w-4 h-4" fill={saved ? "currentColor" : "none"} />
-              </button>
-            </div>
+        {/* Text and Controls in the Upper Portion */}
+        <div className="relative z-10 p-6 sm:p-8 md:p-10 flex flex-col justify-start max-w-4xl">
+          {/* Metadata Badges */}
+          <div className="flex flex-wrap items-center gap-2.5 mb-4">
+            <span className="px-3 py-1 rounded-full bg-red-600 text-white font-extrabold text-xs uppercase tracking-wider shadow-sm">
+              Lead Dispatch of the Day
+            </span>
+            <span className="text-gray-200 text-xs flex items-center gap-1.5 font-semibold bg-black/50 backdrop-blur-md px-3 py-1 rounded-full border border-white/10">
+              <Clock className="w-3.5 h-3.5 text-red-400" />
+              4 min read
+            </span>
+            <span className="text-white/40 text-xs">•</span>
+            <span className="text-gray-300 text-xs font-medium">
+              {article.author?.published_date || "Today's Edition"}
+            </span>
           </div>
 
-          {/* Right Image Column */}
-          <div className="lg:col-span-5 relative min-h-[260px] lg:min-h-full bg-gray-100">
-            <img
-              src={article.image_url || "/assets/demo-card-thumbnail.png"}
-              alt={article.title}
-              className="w-full h-full object-cover object-center"
-              onError={(e) => {
-                e.currentTarget.src = "/assets/demo-card-thumbnail.png";
-              }}
-            />
+          {/* Headline */}
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[38px] font-black font-serif tracking-tight leading-tight mb-4 text-white hover:text-red-400 transition-colors drop-shadow-md">
+            <Link href={`/news/${article._id}`}>{article.title}</Link>
+          </h2>
+
+          {/* Excerpt Summary */}
+          <p className="text-gray-200 text-sm sm:text-base leading-relaxed line-clamp-3 mb-6 font-normal drop-shadow-xs max-w-3xl">
+            {article.details}
+          </p>
+
+          {/* Controls */}
+          <div className="flex flex-wrap items-center gap-3 pt-2">
+            <Link
+              href={`/news/${article._id}`}
+              className="px-6 py-3 bg-red-600 hover:bg-red-700 active:scale-95 text-white font-bold text-sm rounded-2xl transition-all flex items-center gap-2 shadow-lg shadow-red-600/40"
+            >
+              <span>Read Full Story</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+
+            <button
+              onClick={() => setShowAiBriefing(true)}
+              className="px-4 py-3 bg-white/15 hover:bg-white/25 active:scale-95 text-white font-bold text-sm rounded-2xl backdrop-blur-md transition-all flex items-center gap-1.5 border border-white/20 shadow-xs"
+            >
+              <Sparkles className="w-4 h-4 text-amber-400" />
+              <span>⚡ AI 30s Briefing</span>
+            </button>
+
+            <button
+              onClick={handleSave}
+              className={`p-3 rounded-2xl border backdrop-blur-md transition-all ${
+                saved
+                  ? "bg-red-600 border-red-500 text-white"
+                  : "bg-white/15 border-white/20 text-white hover:bg-white/25"
+              }`}
+              title={saved ? "Remove bookmark" : "Save for later"}
+            >
+              <Bookmark className="w-4 h-4" fill={saved ? "currentColor" : "none"} />
+            </button>
           </div>
         </div>
       </div>
