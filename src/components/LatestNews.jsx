@@ -3,22 +3,12 @@
 import Marquee from "react-fast-marquee";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { defaultNews } from "../data/newsData";
 
 const LatestNews = () => {
-  const [headlines, setHeadlines] = useState([
-    {
-      id: "0282e0e58a5c404fbd15261f11c2ab6a",
-      title: "Biden Pledges Nearly $3 Billion To Ukraine In Largest U.S. Military Aid Package Yet",
-    },
-    {
-      id: "1",
-      title: "Tucker Carlson Swears Vladimir Putin Is Winning The War In Ukraine",
-    },
-    {
-      id: "2",
-      title: "Global Tech Giants Announce Major Breakthroughs in Clean Energy AI",
-    },
-  ]);
+  const [headlines, setHeadlines] = useState(
+    defaultNews.slice(0, 5).map((n) => ({ id: n._id, title: n.title }))
+  );
 
   useEffect(() => {
     fetch("https://openapi.programming-hero.com/api/news/category/01")
@@ -33,23 +23,24 @@ const LatestNews = () => {
           );
         }
       })
-      .catch((err) => console.error("Ticker fetch error:", err));
+      .catch((err) => console.error("Using default ticker:", err));
   }, []);
 
   return (
-    <div className="flex gap-2 justify-center items-center bg-base-300 p-3">
-      <p className="bg-[#D72050] text-white px-3 py-1 font-semibold text-sm">
-        Latest
-      </p>
+    <div className="flex items-center gap-3 bg-red-50/70 border-2 border-red-200/80 p-2.5 rounded-2xl shadow-2xs">
+      <span className="bg-red-600 text-white px-3.5 py-1.5 font-black text-xs uppercase tracking-wider rounded-xl shadow-sm flex-shrink-0">
+        Breaking
+      </span>
 
-      <Marquee pauseOnHover={true} speed={70} className="space-x-10 text-gray-800 font-medium">
+      <Marquee pauseOnHover={true} speed={65} className="space-x-12 text-gray-900 font-semibold text-xs sm:text-sm">
         {headlines.map((item, index) => (
           <Link
             key={index}
             href={`/news/${item.id}`}
-            className="hover:text-[#D72050] transition-colors mx-4"
+            className="hover:text-red-600 transition-colors mx-6 flex items-center gap-2"
           >
-            {item.title}
+            <span>•</span>
+            <span>{item.title}</span>
           </Link>
         ))}
       </Marquee>
