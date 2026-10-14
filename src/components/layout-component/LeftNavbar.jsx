@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Layers, Flame, Compass, Sparkles, TrendingUp } from "lucide-react";
+import { Layers, Sparkles, TrendingUp } from "lucide-react";
+import { defaultCategories } from "../../data/newsData";
 
 const categoryIcons = {
   "01": "⚡",
@@ -17,27 +18,27 @@ const categoryIcons = {
 };
 
 const LeftNavbar = () => {
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState(defaultCategories);
   const pathname = usePathname();
 
   useEffect(() => {
     fetch("https://openapi.programming-hero.com/api/news/categories")
       .then((result) => result.json())
       .then((data) => {
-        if (data?.data?.news_category) {
+        if (data?.data?.news_category && Array.isArray(data.data.news_category)) {
           setCategories(data.data.news_category);
         }
       })
-      .catch((error) => console.error("Error loading categories:", error));
+      .catch((error) => console.error("Using default categories:", error));
   }, []);
 
   return (
     <div className="space-y-6">
       {/* Category Navigation */}
-      <div className="bg-white rounded-2xl p-4 border border-gray-150 shadow-xs">
+      <div className="bg-white rounded-2xl p-4 border-2 border-gray-200/80 shadow-xs">
         <div className="flex items-center gap-2 mb-3 px-2">
           <Layers className="w-4 h-4 text-red-600" />
-          <h3 className="font-bold text-gray-900 text-sm tracking-tight">
+          <h3 className="font-bold text-gray-950 text-sm tracking-tight">
             Editorial Sections
           </h3>
         </div>
@@ -54,10 +55,10 @@ const LeftNavbar = () => {
               <Link
                 href={`/category/${category.category_id}`}
                 key={category.category_id}
-                className={`flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
+                className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-bold transition-all ${
                   isActive
-                    ? "bg-red-600 text-white shadow-sm shadow-red-600/20"
-                    : "text-gray-600 hover:text-gray-950 hover:bg-gray-100"
+                    ? "bg-red-600 text-white shadow-sm shadow-red-600/30"
+                    : "text-gray-700 hover:text-black hover:bg-gray-100"
                 }`}
               >
                 <span className="flex items-center gap-2">
@@ -74,7 +75,7 @@ const LeftNavbar = () => {
       </div>
 
       {/* Trending Newsroom Tags */}
-      <div className="bg-gradient-to-br from-gray-50 to-gray-100/60 rounded-2xl p-4 border border-gray-150">
+      <div className="bg-gradient-to-br from-gray-50 to-gray-100/80 rounded-2xl p-4 border border-gray-200">
         <div className="flex items-center gap-2 mb-2.5 px-1">
           <TrendingUp className="w-4 h-4 text-amber-600" />
           <h4 className="font-bold text-gray-900 text-xs uppercase tracking-wider">
@@ -87,7 +88,7 @@ const LeftNavbar = () => {
             (tag) => (
               <span
                 key={tag}
-                className="text-[11px] font-medium px-2.5 py-1 rounded-lg bg-white border border-gray-200 text-gray-700 hover:border-red-400 hover:text-red-600 cursor-pointer transition-colors"
+                className="text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-white border border-gray-200 text-gray-700 hover:border-red-400 hover:text-red-600 cursor-pointer transition-colors"
               >
                 {tag}
               </span>
@@ -96,14 +97,14 @@ const LeftNavbar = () => {
         </div>
       </div>
 
-      {/* Dispatch Schedule Badge */}
-      <div className="p-3.5 bg-neutral-900 text-white rounded-2xl text-xs">
-        <div className="flex items-center gap-2 mb-1 text-amber-400 font-bold">
-          <Sparkles className="w-3.5 h-3.5" />
+      {/* Dispatch Schedule Badge - Light Card */}
+      <div className="p-4 bg-gradient-to-br from-red-50 to-amber-50/70 border border-red-200/80 rounded-2xl text-xs text-gray-900">
+        <div className="flex items-center gap-2 mb-1.5 text-red-700 font-bold">
+          <Sparkles className="w-4 h-4 text-red-600" />
           <span>Daily Dispatch Cycle</span>
         </div>
-        <p className="text-gray-400 text-[11px] leading-relaxed">
-          Morning Edition drops at <strong>6:00 AM EST</strong>. Evening Intelligence Briefing at <strong>5:30 PM EST</strong>.
+        <p className="text-gray-600 text-[11px] leading-relaxed">
+          Morning Edition drops at <strong className="text-gray-900">6:00 AM EST</strong>. Evening Intelligence Briefing at <strong className="text-gray-900">5:30 PM EST</strong>.
         </p>
       </div>
     </div>

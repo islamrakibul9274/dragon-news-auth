@@ -3,12 +3,17 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+:root {
+  color-scheme: light;
+}
+
 body {
   font-family: 'Poppins', sans-serif;
-  color: #1a1a1a;
+  color: #111827;
   background-color: #ffffff;
 }
 
 a.active {
-  background-color: #E7e7e7;
+  background-color: #f3f4f6;
+  color: #111827;
 }

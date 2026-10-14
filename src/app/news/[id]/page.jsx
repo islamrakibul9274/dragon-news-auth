@@ -3,24 +3,10 @@ import Navbar from "../../../components/Navbar";
 import RightNav from "../../../components/layout-component/RightNav";
 import PrivateRoute from "../../../components/PrivateRoute";
 import ArticleReader from "../../../components/ArticleReader";
-
-async function getNewsDetail(id) {
-  try {
-    const res = await fetch(
-      `https://openapi.programming-hero.com/api/news/${id}`,
-      { next: { revalidate: 60 } }
-    );
-    if (!res.ok) return null;
-    const data = await res.json();
-    return data?.data?.[0] || null;
-  } catch (error) {
-    console.error("Failed to fetch news detail:", error);
-    return null;
-  }
-}
+import { fetchNewsById } from "../../../data/newsData";
 
 export default async function NewsDetailsPage({ params }) {
-  const news = await getNewsDetail(params.id);
+  const news = await fetchNewsById(params.id);
 
   return (
     <PrivateRoute>
@@ -33,7 +19,7 @@ export default async function NewsDetailsPage({ params }) {
             {news ? (
               <ArticleReader news={news} />
             ) : (
-              <div className="bg-gray-50 border border-gray-200 rounded-2xl p-12 text-center text-gray-500">
+              <div className="bg-gray-50 border-2 border-gray-200 rounded-3xl p-12 text-center text-gray-500">
                 <h3 className="text-lg font-bold text-gray-800 mb-1">
                   Dispatch Not Found
                 </h3>

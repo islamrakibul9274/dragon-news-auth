@@ -3,7 +3,7 @@
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../provider/AuthProvider";
 import { getPusherClient } from "../lib/pusher";
-import { MessageSquare, Send, Heart, User, Loader2 } from "lucide-react";
+import { MessageSquare, Send, Loader2 } from "lucide-react";
 
 export default function CommentsSection({ articleId }) {
   const { user } = useContext(AuthContext);
@@ -74,17 +74,17 @@ export default function CommentsSection({ articleId }) {
   };
 
   return (
-    <div className="mt-12 pt-8 border-t border-gray-200">
+    <div className="mt-12 pt-8 border-t-2 border-gray-150">
       <div className="flex items-center gap-2 mb-6">
         <MessageSquare className="w-5 h-5 text-red-600" />
-        <h3 className="text-xl font-bold text-gray-900">
+        <h3 className="text-xl font-black text-gray-950 font-serif">
           Reader Discussion ({comments.length})
         </h3>
       </div>
 
       {/* Input box */}
       <form onSubmit={handleSubmit} className="mb-8">
-        <div className="p-3 bg-gray-50 border border-gray-200 rounded-2xl focus-within:border-gray-400 transition-colors">
+        <div className="p-4 bg-gray-50 border-2 border-gray-200 rounded-3xl focus-within:border-red-600 focus-within:bg-white transition-all shadow-2xs">
           <textarea
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
@@ -94,18 +94,18 @@ export default function CommentsSection({ articleId }) {
                 : "Share your perspective on this dispatch..."
             }
             rows={3}
-            className="w-full bg-transparent border-none text-sm text-gray-900 placeholder-gray-400 focus:outline-none resize-none"
+            className="w-full bg-transparent border-none text-sm text-gray-900 placeholder-gray-400 focus:outline-none resize-none font-medium"
           />
 
-          <div className="flex items-center justify-between pt-2 border-t border-gray-200/80">
-            <span className="text-[11px] text-gray-400">
+          <div className="flex items-center justify-between pt-3 border-t border-gray-200">
+            <span className="text-[11px] text-gray-500 font-medium">
               {user ? `Posting as ${user.displayName || user.email}` : "Civil discourse only."}
             </span>
 
             <button
               type="submit"
               disabled={submitting || !newComment.trim()}
-              className="px-4 py-2 bg-neutral-900 hover:bg-black text-white text-xs font-semibold rounded-xl flex items-center gap-1.5 transition-all disabled:opacity-40"
+              className="px-5 py-2.5 bg-red-600 hover:bg-red-700 active:scale-95 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 transition-all shadow-md shadow-red-600/25 disabled:opacity-40"
             >
               {submitting ? (
                 <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -123,30 +123,30 @@ export default function CommentsSection({ articleId }) {
       {/* Comments List */}
       <div className="space-y-4">
         {loading ? (
-          <div className="py-6 text-center text-gray-400 text-xs">
+          <div className="py-6 text-center text-gray-500 text-xs font-medium">
             Loading thoughts...
           </div>
         ) : comments.length > 0 ? (
           comments.map((comment) => (
             <div
               key={comment._id}
-              className="p-4 bg-white border border-gray-150 rounded-2xl shadow-2xs"
+              className="p-5 bg-white border-2 border-gray-150 rounded-2xl shadow-2xs"
             >
-              <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center justify-between mb-2.5">
                 <div className="flex items-center gap-2.5">
                   <img
                     src={comment.authorAvatar || "/assets/user.png"}
                     alt={comment.authorName}
-                    className="w-8 h-8 rounded-full object-cover border border-gray-200"
+                    className="w-9 h-9 rounded-full object-cover border-2 border-gray-200"
                     onError={(e) => {
                       e.currentTarget.src = "/assets/user.png";
                     }}
                   />
                   <div>
-                    <h5 className="font-semibold text-xs text-gray-900">
+                    <h5 className="font-bold text-xs text-gray-900">
                       {comment.authorName}
                     </h5>
-                    <span className="text-[10px] text-gray-400">
+                    <span className="text-[10px] text-gray-500 font-medium">
                       {new Date(comment.createdAt).toLocaleDateString("en-US", {
                         month: "short",
                         day: "numeric",
@@ -158,13 +158,13 @@ export default function CommentsSection({ articleId }) {
                 </div>
               </div>
 
-              <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">
+              <p className="text-sm text-gray-800 leading-relaxed whitespace-pre-line font-normal">
                 {comment.content}
               </p>
             </div>
           ))
         ) : (
-          <div className="py-8 text-center text-gray-400 text-xs">
+          <div className="py-8 text-center text-gray-500 text-xs font-medium">
             No perspectives yet. Be the first to share your perspective!
           </div>
         )}

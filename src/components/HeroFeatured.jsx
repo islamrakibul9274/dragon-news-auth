@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Sparkles, Clock, ArrowRight, Bookmark, Share2 } from "lucide-react";
+import { Sparkles, Clock, ArrowRight, Bookmark } from "lucide-react";
 import AiBriefingDrawer from "./AiBriefingDrawer";
 
 export default function HeroFeatured({ article }) {
@@ -31,39 +31,39 @@ export default function HeroFeatured({ article }) {
 
   return (
     <>
-      <div className="relative bg-gradient-to-b from-gray-900 via-neutral-900 to-black text-white rounded-3xl overflow-hidden shadow-2xl mb-8 border border-neutral-800">
-        <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[440px]">
+      <div className="bg-white text-gray-950 rounded-3xl overflow-hidden shadow-xl border-2 border-gray-200/80 mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12">
           {/* Left Text Column */}
-          <div className="lg:col-span-7 p-6 sm:p-8 md:p-10 flex flex-col justify-between relative z-10">
+          <div className="lg:col-span-7 p-6 sm:p-8 md:p-10 flex flex-col justify-between">
             <div>
               <div className="flex flex-wrap items-center gap-2.5 mb-4">
-                <span className="px-3 py-1 rounded-full bg-red-600 text-white font-bold text-xs uppercase tracking-wider shadow-sm">
-                  Lead Dispatch
+                <span className="px-3 py-1 rounded-full bg-red-600 text-white font-extrabold text-xs uppercase tracking-wider shadow-sm">
+                  Lead Dispatch of the Day
                 </span>
-                <span className="text-gray-400 text-xs flex items-center gap-1 font-medium">
-                  <Clock className="w-3.5 h-3.5" />
+                <span className="text-gray-600 text-xs flex items-center gap-1 font-semibold">
+                  <Clock className="w-3.5 h-3.5 text-gray-500" />
                   4 min read
                 </span>
-                <span className="text-gray-500 text-xs">•</span>
-                <span className="text-gray-400 text-xs">
+                <span className="text-gray-300 text-xs">•</span>
+                <span className="text-gray-500 text-xs font-medium">
                   {article.author?.published_date || "Today's Edition"}
                 </span>
               </div>
 
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight mb-4 text-white hover:text-red-400 transition-colors">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-black font-serif tracking-tight leading-tight mb-4 text-gray-950 hover:text-red-600 transition-colors">
                 <Link href={`/news/${article._id}`}>{article.title}</Link>
-              </h1>
+              </h2>
 
-              <p className="text-gray-300 text-sm md:text-base leading-relaxed line-clamp-3 mb-6 font-normal">
+              <p className="text-gray-700 text-sm sm:text-base leading-relaxed line-clamp-3 mb-6 font-normal">
                 {article.details}
               </p>
             </div>
 
             {/* Controls */}
-            <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-neutral-800">
+            <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-gray-150">
               <Link
                 href={`/news/${article._id}`}
-                className="px-6 py-2.5 bg-red-600 hover:bg-red-700 active:scale-95 text-white font-semibold text-sm rounded-xl transition-all flex items-center gap-2 shadow-lg shadow-red-600/30"
+                className="px-6 py-3 bg-red-600 hover:bg-red-700 active:scale-95 text-white font-bold text-sm rounded-2xl transition-all flex items-center gap-2 shadow-lg shadow-red-600/30"
               >
                 <span>Read Full Story</span>
                 <ArrowRight className="w-4 h-4" />
@@ -71,18 +71,18 @@ export default function HeroFeatured({ article }) {
 
               <button
                 onClick={() => setShowAiBriefing(true)}
-                className="px-4 py-2.5 bg-white/10 hover:bg-white/20 active:scale-95 text-white font-semibold text-sm rounded-xl transition-all flex items-center gap-1.5 backdrop-blur-sm border border-white/10"
+                className="px-4 py-3 bg-amber-100 hover:bg-amber-200 active:scale-95 text-amber-900 font-bold text-sm rounded-2xl transition-all flex items-center gap-1.5 border border-amber-300 shadow-2xs"
               >
-                <Sparkles className="w-4 h-4 text-yellow-400" />
+                <Sparkles className="w-4 h-4 text-amber-700" />
                 <span>⚡ AI 30s Briefing</span>
               </button>
 
               <button
                 onClick={handleSave}
-                className={`p-2.5 rounded-xl border transition-all ${
+                className={`p-3 rounded-2xl border transition-all ${
                   saved
-                    ? "bg-red-600/20 border-red-500 text-red-400"
-                    : "bg-white/5 border-white/10 text-gray-400 hover:text-white hover:bg-white/10"
+                    ? "bg-red-50 border-red-400 text-red-600"
+                    : "bg-gray-100 border-gray-200 text-gray-600 hover:text-black hover:bg-gray-200"
                 }`}
                 title={saved ? "Remove bookmark" : "Save for later"}
               >
@@ -92,16 +92,15 @@ export default function HeroFeatured({ article }) {
           </div>
 
           {/* Right Image Column */}
-          <div className="lg:col-span-5 relative min-h-[260px] lg:min-h-full">
+          <div className="lg:col-span-5 relative min-h-[260px] lg:min-h-full bg-gray-100">
             <img
               src={article.image_url || "/assets/demo-card-thumbnail.png"}
               alt={article.title}
-              className="absolute inset-0 w-full h-full object-cover object-center"
+              className="w-full h-full object-cover object-center"
               onError={(e) => {
                 e.currentTarget.src = "/assets/demo-card-thumbnail.png";
               }}
             />
-            <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-gray-900 via-gray-900/40 to-transparent" />
           </div>
         </div>
       </div>
