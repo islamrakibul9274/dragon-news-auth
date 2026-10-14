@@ -1,5 +1,7 @@
 import HomeLayout from "../../../layouts/HomeLayout";
 import CategoryNews from "../../../components/CategoryNews";
+import HeroFeatured from "../../../components/HeroFeatured";
+import NewsletterSubscribe from "../../../components/NewsletterSubscribe";
 
 async function getCategoryNews(categoryId) {
   try {
@@ -20,9 +22,16 @@ export default async function CategoryPage({ params }) {
   const { id } = params;
   const news = await getCategoryNews(id);
 
+  const leadStory = news.length > 0 ? news[0] : null;
+  const feedStories = news.length > 1 ? news.slice(1) : news;
+
   return (
     <HomeLayout>
-      <CategoryNews news={news} title="Dragon News Home" />
+      {leadStory && <HeroFeatured article={leadStory} />}
+      <CategoryNews news={feedStories} title="Category Dispatches" />
+      <div className="mt-10">
+        <NewsletterSubscribe variant="banner" />
+      </div>
     </HomeLayout>
   );
 }
